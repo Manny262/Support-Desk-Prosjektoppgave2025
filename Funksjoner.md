@@ -2,7 +2,7 @@
 
 ## Brukeren må:
  - Logge inn med sin bruker
- - Sende inn en sak med: Tittel, Beskrivelse, Frist, Kategori. 
+ - Sende inn en sak med: Tittel, Beskrivelse, Kategori og hastighetsnivå. 
  - Ha oversikt over sine saker som er sendt inn/til behandling
  - Kontakinformasjon om saksbehandler (navn, evt tlfnr)
  
@@ -12,7 +12,8 @@
 - Filtrering for hvilke saker hen kan se i oversikt
 - Redigere saker og endre status på saken. 
 - Mulighet for å sende inn kommentarer til saken (brukeren skal også ha mulighet for å se dem)
-- Se kontaktinformasjon for brukeren
+- Se kontaktinformasjon for brukeren'
+- Gi brukeren en dato for timeavtale.
 
 
 ## Fint å ha - men ikke må:
