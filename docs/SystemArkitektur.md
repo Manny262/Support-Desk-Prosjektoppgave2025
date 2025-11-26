@@ -4,6 +4,7 @@ SUPPORT-DESK-PROSJEKTOPPGAVE2025
  |           ├── AuthApp
  |           |── UserApp
  |           |── CaseManagerApp
+ |           |── SharedApp
  |           ├── templates/
  |           ├── static/
  |           └── manage.py
