@@ -52,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'AuthApp.middleware.BlockStaff',
+    'AuthApp.middleware.Staffredirect',
 ]
 
 ROOT_URLCONF = 'DjangoProjectSupportDesk.urls'
