@@ -43,6 +43,7 @@ def register(request):
             messages.error(request, 'Passordene matcher ikke')
     return render(request, 'scrRegister.html')
 
+@login_required 
 def LogoutPage(request):
     logout(request)
     return redirect('scrLogin')
