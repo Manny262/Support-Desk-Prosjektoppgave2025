@@ -6,6 +6,36 @@
     <title>scrNewCase</title>
 </head>
 <body>
-    
+    <h1>Opprett ny sak:</h1>
+    <form method="POST" action="">
+        {% csrf_token %}
+        
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" maxlength="100" required><br><br>
+        
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" maxlength="500" rows="5" cols="50" required></textarea><br><br>
+        
+        <label for="category">Category:</label><br>
+        <select id="category" name="category" required>
+            <option value="">Velg Kategori</option>
+            <option value="Pc">Pc</option>
+            <option value="Mac">Mac</option>
+            <option value="Teams">Teams</option>
+            <option value="Office365">Office365</option>
+        </select><br><br>
+        
+        <label for="urgency">Urgency:</label><br>
+        <select id="urgency" name="urgency" required>
+            <option value="">Hastighetsnivå</option>
+            <option value="low">lavt</option>
+            <option value="middel">Middels</option>
+            <option value="high">Høyt</option>
+        </select><br><br>
+
+        
+        <button type="submit">Submit Case</button>
+    </form>
+
 </body>
 </html>
