@@ -23,3 +23,28 @@ create table Comments_Model(
 	Text varchar(600),
 	Created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
+
+
+Create Function NewCase(inpTitle varchar, inpDescription varchar, inpCategory varchar, inpUrgency varchar, inpStatus varchar, inpUser_ID integer)
+Returns Table(caseId INTEGER, succes BOOLEAN, message text)
+Language plpgsql
+as $$
+Begin 
+Insert Into Case_Model(Title, Description, Category, Urgency, Status, User_ID) 
+Values(inpTitle, inpDescription, inpCategory, inpUrgency, inpStatus, inpUser_ID)
+Returning Case_ID into caseId;
+
+succes := TRUE;
+message := 'Case Created';
+Return next; 
+
+exception when others then
+caseId := NULL;
+succes := FALSE;
+message:= SQLERRM;
+return next;
+end;
+$$ 
+
+
+select * from Case_Model
