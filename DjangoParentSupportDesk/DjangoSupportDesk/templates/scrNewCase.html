@@ -10,7 +10,6 @@
     <h1>Opprett ny sak:</h1>
     <form method="POST" action="{% url 'CreateCase' %}">
         {% csrf_token %}
-        
         <label for="title">Title:</label><br>
         <input type="text" id="title" name="title" maxlength="100" required><br><br>
         
@@ -45,6 +44,7 @@
                     </div>
                 {% endfor %}
             </div>
-            {% endif %}
+    {% endif %}
+
 </body>
 </html>

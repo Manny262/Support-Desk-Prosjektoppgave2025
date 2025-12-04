@@ -31,9 +31,9 @@ def CreateCase(request):
                 if result[1]:
                     messages.success(request, result[2])
                     return redirect('scrCaseManagerMain')
-                    
                 else:
                     messages.error(request, result[2])
+
         except Exception as e:
             messages.error(request, f'Error: {str(e)}')
         return render(request, 'scrNewCase.html')

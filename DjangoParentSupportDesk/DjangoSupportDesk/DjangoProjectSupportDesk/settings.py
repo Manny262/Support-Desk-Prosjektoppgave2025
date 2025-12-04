@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'AuthApp',
     'CaseManagerApp',
     'UserApp',
-    'SharedApp'
+    'SharedApp',
+    'django_tables2'
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Django Tables2 Configuration
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap5-responsive.html"
+DJANGO_TABLES2_TABLE_ATTRS = {
+    'class': 'table table-hover table-bordered',
+    'thead': {
+        'class': 'table-light'
+    }
+}
