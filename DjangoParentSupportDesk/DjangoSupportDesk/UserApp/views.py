@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db import connection as conn 
-from SharedApp.tables import CaseTable 
 
 @login_required 
 def UserMain(request):
@@ -20,8 +19,8 @@ def UserTable(request):
             )
         columns = [col[0] for col in cursor.description]
         cases = [dict(zip(columns, row))for row in cursor.fetchall()]
-    table = CaseTable(cases)
-    return render(request, 'scrUserTable.html', {'table': table
+
+    return render(request, 'scrUserTable.html', {'cases': cases
     })
 
 @login_required 
