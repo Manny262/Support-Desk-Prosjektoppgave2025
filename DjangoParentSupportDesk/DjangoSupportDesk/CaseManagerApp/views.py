@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.db import connection
+from django.contrib import messages
+from django.db import connection as conn
 
 
 @login_required 
@@ -9,7 +9,57 @@ def CaseManagerMain(request):
     return render(request, 'scrCaseManagerMain.html')
 @login_required
 def CaseManagerTable(request):
-    return render(request,'scrCaseManagerTable.html')
+      with conn.cursor() as cursor:
+        cursor.execute(
+            '''SELECT Case_ID as case_id, Title as title, Description as description, 
+                      Category as category, Urgency as urgency, Status as status, 
+                      Created_at as created_at
+             FROM Case_Model 
+             WHERE User_ID = %s
+             ORDER BY Created_at DESC
+             ''', [request.user.id] 
+            )
+        columns = [col[0] for col in cursor.description]
+        cases = [dict(zip(columns, row))for row in cursor.fetchall()]
+
+        return render(request,'scrCaseManagerTable.html', {'cases': cases})
+      
 @login_required
-def CaseManagerView(request):
-    return render(request, 'scrCaseManagerView.html')
+def CaseManagerView(request, case_id):
+    with conn.cursor() as cursor:
+        cursor.execute(
+            '''SELECT Case_ID as case_id, Title as title, Description as description,
+                      Category as category, Urgency as urgency, Status as status,
+                      Created_at as created_at, Changed_at as changed_at
+             FROM Case_Model
+             WHERE Case_ID = %s AND User_ID = %s
+             ''', [case_id, request.user.id]
+        )
+        columns = [col[0] for col in cursor.description]
+        row = cursor.fetchone()
+        
+        if row:
+            case = dict(zip(columns, row))
+        else:
+            case = None
+    return render(request, 'scrCaseManagerView.html', {'case': case})
+
+@login_required 
+def CaseManagerUpdateCase(request, case_id):
+    if request.method == 'POST':
+        newstat = request.POST['status']    
+        with conn.cursor() as cursor:
+            cursor.execute(
+                '''Update Case_Model 
+                    Set Status = %s
+                    Where Case_id = %s; 
+                ''', [newstat, case_id]
+            )
+            if cursor.rowcount > 0:
+                messages.success(request, 'Sak oppdatert')
+            else:
+                messages.errror(request, 'Feil ved oppdatering av sak')
+         
+        return redirect('scrCaseManagerView', case_id=case_id)
+        
+    

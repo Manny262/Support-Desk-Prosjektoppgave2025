@@ -6,7 +6,7 @@
     <title>scrNewCase</title>
 </head>
 <body>
-    
+    <input type=button value="Gå tilbake" onClick="javascript:history.go(-1);">
     <h1>Opprett ny sak:</h1>
     <form method="POST" action="{% url 'CreateCase' %}">
         {% csrf_token %}

@@ -7,6 +7,17 @@
 </head>
 <body>
     <a href="{% url 'scrUserTable' %}">Mine saker</a>
+    <a href="{% url 'scrNewCase' %}">Opprett ny sak</a>
+    <a href="{% url 'scrLogoutPage' %}">logg ut</a>
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
     
 </body>
 </html>

@@ -30,7 +30,11 @@ def CreateCase(request):
 
                 if result[1]:
                     messages.success(request, result[2])
-                    return redirect('scrCaseManagerMain')
+                    match request.user.is_staff:
+                        case True:
+                            return redirect('scrCaseManagerMain')
+                        case False: 
+                            return redirect('scrUserMain')
                 else:
                     messages.error(request, result[2])
 

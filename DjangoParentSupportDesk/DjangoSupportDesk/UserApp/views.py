@@ -9,9 +9,9 @@ def UserMain(request):
 def UserTable(request):
     with conn.cursor() as cursor:
         cursor.execute(
-            '''SELECT Case_ID as case_id, Title as title, Description as description, 
-                      Category as category, Urgency as urgency, Status as status, 
-                      Created_at as created_at 
+            '''SELECT Case_ID, Title, Description, 
+                      Category, Urgency, Status, 
+                      Created_at
              FROM Case_Model 
              WHERE User_ID = %s
              ORDER BY Created_at DESC
@@ -26,3 +26,4 @@ def UserTable(request):
 @login_required 
 def UserView(request):
     return render(request, 'scrUserView.html')
+

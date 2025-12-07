@@ -4,5 +4,6 @@ from . import views
 urlpatterns = [
     path('CaseManagerMain/', views.CaseManagerMain, name='scrCaseManagerMain'),
     path('CaseManagerTable/', views.CaseManagerTable, name='scrCaseManagerTable'),
-    path('CaseManagerView/', views.CaseManagerView, name='scrCaseManagerView')
+    path('CaseManagerView/<int:case_id>/', views.CaseManagerView, name='scrCaseManagerView'),
+    path('CaseManagerUpdateCase/<int:case_id>/', views.CaseManagerUpdateCase, name='CaseManagerUpdateCase')
 ]
