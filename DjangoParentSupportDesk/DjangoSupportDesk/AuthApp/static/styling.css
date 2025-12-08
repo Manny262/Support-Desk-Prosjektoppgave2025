@@ -1,0 +1,316 @@
+:root {
+  /* -------------------------
+     TYPOGRAPHY
+     ------------------------- */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    monospace;
+  --base-font-size: 1rem; /* 1rem = 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-md: 1rem; /* 16px */
+  --text-sm: 0.875rem; /* 14px */
+  --leading-body: 1.6;
+
+  /* -------------------------
+     COLORS (HSL) - LIGHT MODE
+     ------------------------- */
+  --color-bg: hsl(240, 20%, 98%);
+  --color-surface: hsl(240, 20%, 100%);
+  --color-border: hsl(240, 10%, 85%);
+  --color-text-primary: hsl(240, 10%, 10%);
+  --color-text-secondary: hsl(240, 8%, 38%);
+
+  --color-primary: hsl(215, 90%, 55%);
+  --color-primary-hover: hsl(215, 90%, 48%);
+  --color-secondary: hsl(250, 70%, 60%);
+
+  --color-success: hsl(145, 60%, 45%);
+  --color-error: hsl(0, 70%, 55%);
+  --color-info: hsl(200, 80%, 60%);
+
+  /* Placeholder / muted */
+  --color-muted: hsl(240, 5%, 55%);
+
+  /* -------------------------
+     COLORS - SHADOWS (light)
+     ------------------------- */
+  --shadow-sm: 0 2px 6px hsla(240, 30%, 80%, 0.45);
+  --shadow-md: 0 4px 16px hsla(240, 30%, 80%, 0.4);
+  --shadow-lg: 0 8px 32px hsla(240, 30%, 80%, 0.3);
+
+  /* -------------------------
+     DARK THEME VARIABLES (fallback values; overridden by [data-theme="dark"])
+     ------------------------- */
+  --color-bg-dark: hsl(240, 15%, 12%);
+  --color-surface-dark: hsl(240, 15%, 18%);
+  --color-border-dark: hsl(240, 8%, 26%);
+  --color-text-primary-dark: hsl(0, 0%, 98%);
+  --color-text-secondary-dark: hsl(240, 5%, 70%);
+  --color-primary-dark: hsl(215, 90%, 62%);
+  --shadow-sm-dark: 0 4px 12px hsla(240, 40%, 5%, 0.55);
+
+  /* -------------------------
+     SPACING SCALE (8px system)
+     ------------------------- */
+  --space-xs: 0.25rem; /* 4px  */
+  --space-s: 0.5rem; /* 8px  */
+  --space-m: 1rem; /* 16px */
+  --space-l: 1.5rem; /* 24px */
+  --space-xl: 2rem; /* 32px */
+  --space-2xl: 3rem; /* 48px */
+
+  /* -------------------------
+     BORDER RADIUS SCALE
+     ------------------------- */
+  --radius-sm: 0.25rem; /* 4px  */
+  --radius-md: 0.5rem; /* 8px  */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-xl: 1rem; /* 16px */
+  --radius-pill: 1000rem;
+
+  /* -------------------------
+     COMPONENT DIMENSIONS (responsive units)
+     ------------------------- */
+  --control-height: 3rem; /* 48px: standard input/button height */
+  --control-padding-vertical: 0.75rem; /* 12px */
+  --control-padding-horizontal: 1rem; /* 16px */
+  --button-padding: 0.75rem 1.2rem;
+  --card-padding: 1rem; /* 16px */
+  --card-padding-lg: 1.5rem; /* 24px */
+  --max-content-width: 80rem; /* 1280px */
+
+  /* -------------------------
+     TYPOGRAPHY SCALE (tokens for use)
+     ------------------------- */
+  --h1-size: 2rem; /* 32px */
+  --h2-size: 1.5rem; /* 24px */
+  --h3-size: 1.25rem; /* 20px */
+  --body-size: 1rem; /* 16px */
+  --label-size: 0.875rem; /* 14px */
+
+  /* -------------------------
+     TRANSITIONS & MOTION
+     ------------------------- */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --easing-default: cubic-bezier(0.2, 0.9, 0.3, 1);
+
+  /* -------------------------
+     ACCESSIBILITY / FOCUS RING
+     ------------------------- */
+  --focus-ring-color: hsla(215, 90%, 55%, 0.35);
+  --focus-ring-offset: 3px;
+
+  /* -------------------------
+     UTIL / TYPOGRAPHY CSS VARS for convenience
+     ------------------------- */
+  --body-font: var(--font-sans);
+  --mono-font: var(--font-mono);
+  --base-line-height: var(--leading-body);
+
+  /* -------------------------
+     EXAMPLES: small helper tokens for forms
+     ------------------------- */
+  --input-bg: var(--color-surface);
+  --input-border: var(--color-border);
+  --input-placeholder: var(--color-muted);
+  --input-text: var(--color-text-primary);
+
+  /* -------------------------
+     EXPLICIT: Colors used in styles (map light-mode)
+     ------------------------- */
+  --bg: var(--color-bg);
+  --surface: var(--color-surface);
+  --border: var(--color-border);
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --primary: var(--color-primary);
+  --primary-hover: var(--color-primary-hover);
+  --secondary: var(--color-secondary);
+  --success: var(--color-success);
+  --error: var(--color-error);
+  --info: var(--color-info);
+  --muted: var(--color-muted);
+  [data-theme="dark"] {
+    --bg: var(--color-bg-dark);
+    --surface: var(--color-surface-dark);
+    --border: var(--color-border-dark);
+    --text-primary: var(--color-text-primary-dark);
+    --text-secondary: var(--color-text-secondary-dark);
+    --primary: var(--color-primary-dark);
+    --primary-hover: hsl(215, 90%, 70%);
+
+    --success: hsl(145, 60%, 55%);
+    --error: hsl(0, 70%, 65%);
+    --info: hsl(200, 80%, 70%);
+
+    --muted: hsl(240, 5%, 60%);
+    --shadow-sm: var(--shadow-sm-dark);
+    --shadow-md: 0 6px 20px hsla(240, 40%, 5%, 0.55);
+    --shadow-lg: 0 12px 40px hsla(240, 40%, 5%, 0.5);
+
+    /* Inputs in dark mode */
+    --input-bg: var(--surface);
+    --input-border: var(--border);
+    --input-placeholder: var(--muted);
+    --input-text: var(--text-primary);
+  }
+}
+* {
+  margin: 0%;
+}
+
+body {
+  font-family: var(--body-font);
+  font-size: var(--body-size);
+  line-height: var(--base-line-height);
+  background: var(--bg);
+  color: var(--text-primary);
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.login-container {
+  display: flex;
+  background: var(--surface);
+  padding: var(--card-padding-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 28rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.register-container {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  padding: var(--card-padding-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 28rem;
+}
+
+h2 {
+  text-align: center;
+  color: var(--text-primary);
+  font-size: var(--h2-size);
+  margin-bottom: var(--space-xl);
+}
+
+form {
+  width: 100%;
+  padding: 0;
+  height: auto;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: var(--space-l);
+}
+
+label {
+  display: block;
+  margin-bottom: var(--space-xs);
+  color: var(--text-secondary);
+  font-size: var(--label-size);
+  font-weight: 600;
+}
+
+input{
+  width: 100%;
+  height: var(--control-height);
+  padding: var(--control-padding-vertical) var(--control-padding-horizontal);
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-md);
+  color: var(--input-text);
+  font-size: var(--text-md);
+  transition: border-color var(--duration-base) var(--easing-default);
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--focus-ring-color);
+}
+
+input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.btn {
+  width: 100%;
+  height: var(--control-height);
+  padding: var(--button-padding);
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--text-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-base) var(--easing-default);
+  margin-top: var(--space-m);
+}
+
+.btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.messages {
+  margin-top: var(--space-l);
+}
+
+.alert {
+  padding: var(--space-m);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-s);
+  font-size: var(--text-sm);
+}
+
+.alert-error {
+  background-color: hsla(0, 70%, 55%, 0.1);
+  color: var(--error);
+  border: 1px solid hsla(0, 70%, 55%, 0.3);
+}
+
+.alert-success {
+  background-color: hsla(145, 60%, 45%, 0.1);
+  color: var(--success);
+  border: 1px solid hsla(145, 60%, 45%, 0.3);
+}
+
+.login-link {
+  text-align: center;
+  margin-top: var(--space-l);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.login-link a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--duration-fast);
+}
+
+.login-link a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
