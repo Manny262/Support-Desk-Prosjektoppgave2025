@@ -29,7 +29,7 @@ def CaseManagerView(request, case_id):
     with conn.cursor() as cursor:
         cursor.execute(
             '''SELECT Case_ID as case_id, Title as title, Description as description,
-                      Category as category, Urgency as urgency, Status as status,
+                      Category as category, Urgency as urgency, Status as status, Appointment_date as appointment_date,
                       Created_at as created_at, Changed_at as changed_at
              FROM Case_Model
              WHERE Case_ID = %s AND User_ID = %s
@@ -37,7 +37,6 @@ def CaseManagerView(request, case_id):
         )
         columns = [col[0] for col in cursor.description]
         row = cursor.fetchone()
-        
         if row:
             case = dict(zip(columns, row))
         else:
@@ -48,18 +47,23 @@ def CaseManagerView(request, case_id):
 def CaseManagerUpdateCase(request, case_id):
     if request.method == 'POST':
         newstat = request.POST['status']    
+        appointment_date = request.POST['Appointment_date']
+        if not appointment_date :
+            appointment_date = None
+        if not newstat:
+            newstat = None
+
         with conn.cursor() as cursor:
             cursor.execute(
-                '''Update Case_Model 
-                    Set Status = %s
-                    Where Case_id = %s; 
-                ''', [newstat, case_id]
+                'Select * from UpdateCase(%s,%s,%s)'
+                , [case_id,newstat,appointment_date]
             )
-            if cursor.rowcount > 0:
-                messages.success(request, 'Sak oppdatert')
+            result = cursor.fetchone()
+            if result[1]:
+                    messages.success(request, result[2])
+                    return redirect('scrCaseManagerView',case_id=case_id)
             else:
-                messages.errror(request, 'Feil ved oppdatering av sak')
-         
+                    messages.error(request, result[2])
         return redirect('scrCaseManagerView', case_id=case_id)
         
     
