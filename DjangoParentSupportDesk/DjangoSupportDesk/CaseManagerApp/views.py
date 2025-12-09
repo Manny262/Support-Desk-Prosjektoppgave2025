@@ -28,19 +28,19 @@ def CaseManagerTable(request):
 def CaseManagerView(request, case_id):
     with conn.cursor() as cursor:
         cursor.execute(
-            '''SELECT Case_ID as case_id, Title as title, Description as description,
-                      Category as category, Urgency as urgency, Status as status, Appointment_date as appointment_date,
-                      Created_at as created_at, Changed_at as changed_at
-             FROM Case_Model
-             WHERE Case_ID = %s AND User_ID = %s
-             ''', [case_id, request.user.id]
+            'SELECT * FROM GetCase(%s)',
+            [case_id]
         )
         columns = [col[0] for col in cursor.description]
         row = cursor.fetchone()
+
         if row:
             case = dict(zip(columns, row))
-        else:
+            if case['user_id'] != request.user.id:
+                case = None
+        else:   
             case = None
+            
     return render(request, 'scrCaseManagerView.html', {'case': case})
 
 @login_required 

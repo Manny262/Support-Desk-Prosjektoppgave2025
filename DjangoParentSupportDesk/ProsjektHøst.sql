@@ -90,4 +90,29 @@ EXCEPTION WHEN OTHERS THEN
     RETURN NEXT;
 END;
 $$;
-select * from Case_Model
+
+CREATE OR REPLACE FUNCTION GetCase(inpcase_id INTEGER)
+RETURNS SETOF Case_Model
+LANGUAGE plpgsql
+AS $$
+BEGIN 
+    RETURN QUERY
+    SELECT * 
+    FROM Case_Model 
+    WHERE Case_ID = inpcase_id;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION GetCaseComments(inpcase_id INTEGER)
+RETURNS SETOF Comments_Model
+LANGUAGE plpgsql
+AS $$
+BEGIN 
+    RETURN QUERY
+    SELECT * 
+    FROM Comments_Model 
+    WHERE Case_ID = inpcase_id;
+END;
+$$;
+
+
