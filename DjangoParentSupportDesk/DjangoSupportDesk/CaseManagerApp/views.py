@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import connection as conn
+from django.contrib.auth.models import User
 
 
 @login_required 
@@ -33,15 +34,15 @@ def CaseManagerView(request, case_id):
         )
         columns = [col[0] for col in cursor.description]
         row = cursor.fetchone()
-
         if row:
             case = dict(zip(columns, row))
-            if case['user_id'] != request.user.id:
+            staffs = User.objects.filter(is_staff=True, is_active=True)
+            if case['user_id'] != request.user.id: 
                 case = None
         else:   
             case = None
             
-    return render(request, 'scrCaseManagerView.html', {'case': case})
+    return render(request, 'scrCaseManagerView.html', {'case': case, 'staffs':staffs })
 
 @login_required 
 def CaseManagerUpdateCase(request, case_id):

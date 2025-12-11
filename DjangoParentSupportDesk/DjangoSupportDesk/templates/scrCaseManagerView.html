@@ -41,6 +41,17 @@
         <option value="Completed">Fullført</option>
       </select>
       <br />
+      <label for="assigned_to">Tildel til:</label><br />
+      <select id="assigned_to" name="assigned_to">
+        <option value="">Velg ansatt</option>
+        {% for staff_user in staffs %}
+        
+        <option value="{{ staff_user.id }}" >
+          {{ staff_user.username }}
+        </option>
+        {% endfor %}
+      </select>
+      <br />
       <label for="Appointment_date">Timeavtale:</label>
       <br />
       <input

@@ -25,8 +25,8 @@ create table Comments_Model(
 );
 
 
-Create Function NewCase(inpTitle varchar, inpDescription varchar, inpCategory varchar, inpUrgency varchar, inpStatus varchar, inpUser_ID integer)
-Returns Table(caseId INTEGER, succes BOOLEAN, message text)
+Create or replace Function NewCase(inpTitle varchar, inpDescription varchar, inpCategory varchar, inpUrgency varchar, inpStatus varchar, inpUser_ID integer)
+Returns Table(caseId INTEGER, success BOOLEAN, message text)
 Language plpgsql
 as $$
 Begin 
@@ -34,17 +34,17 @@ Insert Into Case_Model(Title, Description, Category, Urgency, Status, User_ID)
 Values(inpTitle, inpDescription, inpCategory, inpUrgency, inpStatus, inpUser_ID)
 Returning Case_ID into caseId;
 
-succes := TRUE;
+success := TRUE;
 message := 'Case Created';
 Return next; 
 
 exception when others then
 caseId := NULL;
-succes := FALSE;
+success := FALSE;
 message:= SQLERRM;
-return next
+return next;
 end;
-$$ 
+$$;
 
 CREATE OR REPLACE FUNCTION UpdateCase(
     inpCase_ID INTEGER, 
@@ -115,4 +115,24 @@ BEGIN
 END;
 $$;
 
+Create or replace Function NewComment(inpAuthor_id INTEGER, inpCase_id INTEGER, inpText varchar )
+Returns Table(caseId INTEGER, success BOOLEAN, message text)
+Language plpgsql
+as $$
+Begin 
+Insert Into Comments_Model(Author_id, case_id, Text) 
+Values(inpAuthor_id, inpCase_id, inpText)
+RETURNING case_id INTO caseId;
+
+success := TRUE;
+message := 'Comment Created';
+Return next; 
+
+exception when others then
+caseId := NULL;
+success := FALSE;
+message:= SQLERRM;
+return next;
+end;
+$$;
 
