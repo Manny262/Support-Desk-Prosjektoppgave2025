@@ -49,7 +49,8 @@ $$;
 CREATE OR REPLACE FUNCTION UpdateCase(
     inpCase_ID INTEGER, 
     inpStatus VARCHAR, 
-    inpAppointment_Date TIMESTAMP
+    inpAppointment_Date TIMESTAMP,
+	inpCaseManager_ID INTEGER
 )
 RETURNS TABLE(caseId INTEGER, success BOOLEAN, message TEXT)
 LANGUAGE plpgsql
@@ -76,6 +77,13 @@ BEGIN
         SET Appointment_date = inpAppointment_Date,
             Changed_at = CURRENT_TIMESTAMP
         WHERE Case_ID = inpCase_ID
+        RETURNING Case_ID INTO caseId;
+
+	ELSIF inpCaseManager_ID IS NOT NULL THEN
+		Update Case_Model
+		SET CaseManager_ID = inpCaseManager_ID,
+		Changed_at = CURRENT_TIMESTAMP
+		WHERE Case_ID = inpCase_ID
         RETURNING Case_ID INTO caseId;
     END IF;
 
