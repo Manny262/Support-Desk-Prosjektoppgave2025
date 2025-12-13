@@ -85,6 +85,14 @@ BEGIN
 		Changed_at = CURRENT_TIMESTAMP
 		WHERE Case_ID = inpCase_ID
         RETURNING Case_ID INTO caseId;
+	  
+    ELSE
+        -- No parameters provided to update
+        caseId := inpCase_ID;
+        success := FALSE;
+        message := 'No changes specified';
+        RETURN NEXT;
+        RETURN;
     END IF;
 
     success := TRUE;

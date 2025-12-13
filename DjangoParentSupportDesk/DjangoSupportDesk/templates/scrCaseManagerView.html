@@ -4,12 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>scrCaseManagerView</title>
+    <style>
+      *{
+        padding: 0;
+        margin: 0;
+      }
+      section {
+      width: 50%;
+      height: 100vh;
+      padding: 20px;
+      background-color: #f5f5f5;
+      border-right: 1px solid #ddd;
+      }
+      
+      body {
+        display: flex;
+        width: 100%;
+        overflow-x: hidden;
+      }
+    </style>
+    
   </head>
   <body>
+    
+    <section>
     <a href="{% url 'scrCaseManagerTable' %}">Gå tilbake</a>
 
     {% if messages %}
-    <div class="messages">
+    
+      <div class="messages">
       {% for message in messages %}
       <div class="alert alert-{{ message.tags }}">{{ message }}</div>
       {% endfor %}
@@ -67,27 +90,51 @@
       <p>{{case.created_at}}</p>
       {% endif %}
     </div>
+    </section>
+    
+    
+    <section>
+      <div>
+      {% if comments %} {% for comment in comments %}
+      <div>
+      <p><strong>{{ comment.user }}</strong> - {{ comment.created_at }}</p>
+      <p>{{ comment.text }}</p>
+      </div>
+      {% endfor %}
+        
+      {% endif %}
+    </div>
+    <div>
+      <form method="POST" action="{% url 'CaseManagerNewComment' case.case_id case.have_comments %}">
+      {% csrf_token %}
+      <input type="text" name="inpNewComment" id="inpNewComment">
+      <button type="submit">Send</button>
+      </form>
+    </div>
+    </section>
+    
   </body>
+  
   <script>
-      const caseStatus = "{{ case.status }}";
-      const emptyStat = document.getElementById("emptyCaseStat");
+    const caseStatus = "{{ case.status }}";
+    const emptyStat = document.getElementById("emptyCaseStat");
 
-      switch (caseStatus) {
-        case "pending":
-          emptyStat.innerHTML = "Venter..";
-          break;
-        case "Case_Created":
-          emptyStat.innerHTML = "Sak opprettet";
-          break;
-        case "Under_process":
-          emptyStat.innerHTML = "Under behandling";
-          break;
-        case "Assigned_date":
-          emptyStat.innerHTML = "Tilordnet dato";
-          break;
-        case "Completed":
-          emptyStat.innerHTML = "Fullført";
-          break;
-      }
+    switch (caseStatus) {
+      case "pending":
+        emptyStat.innerHTML = "Venter..";
+        break;
+      case "Case_Created":
+        emptyStat.innerHTML = "Sak opprettet";
+        break;
+      case "Under_process":
+        emptyStat.innerHTML = "Under behandling";
+        break;
+      case "Assigned_date":
+        emptyStat.innerHTML = "Tilordnet dato";
+        break;
+      case "Completed":
+        emptyStat.innerHTML = "Fullført";
+        break;
+    }
   </script>
 </html>

@@ -8,6 +8,22 @@ def getCaseManagerName(id):
     if id:
         return User.objects.get(id=id).username
 
+def getComments(case_id):
+    with conn.cursor() as cursor:
+        cursor.execute(
+            'SELECT * FROM GetCaseComments(%s)',
+            [case_id]
+        )
+        commentsColumns = [col[0] for col in cursor.description]
+        commentsRows = cursor.fetchall()    
+
+        if commentsRows:
+            comments = [dict(zip(commentsColumns, row)) for row in commentsRows]
+        else:
+            comments = []
+        
+        return comments
+
 
 @login_required 
 def CaseManagerMain(request):
@@ -50,6 +66,13 @@ def CaseManagerView(request, case_id):
         if row:
             case = dict(zip(columns, row))
             staffs = User.objects.filter(is_staff=True, is_active=True)
+            
+            if case['have_comments'] == True:
+                comments = getComments(case_id)
+                print(comments)
+            else: 
+                comments = None 
+                print("none")
             if not case['casemanager_id']:
                  assigned =  "Velg ansatt"
             else: 
@@ -57,7 +80,7 @@ def CaseManagerView(request, case_id):
         else:   
             case = None
             
-    return render(request, 'scrCaseManagerView.html', {'case': case, 'staffs':staffs, 'assigned': assigned })
+    return render(request, 'scrCaseManagerView.html', {'case': case, 'staffs':staffs, 'assigned': assigned, 'comments' : comments})
 
 @login_required 
 def CaseManagerUpdateCase(request, case_id):
@@ -69,6 +92,8 @@ def CaseManagerUpdateCase(request, case_id):
             appointment_date = None
         if not newstat:
             newstat = None
+        if not assigned_to:
+             assigned_to = None 
 
         with conn.cursor() as cursor:
             cursor.execute(
@@ -78,9 +103,37 @@ def CaseManagerUpdateCase(request, case_id):
             result = cursor.fetchone()
             if result[1]:
                     messages.success(request, result[2])
-                    return redirect('scrCaseManagerView',case_id=case_id)
             else:
                     messages.error(request, result[2])
-        return redirect('scrCaseManagerView', case_id=case_id)
-        
     
+    return redirect('scrCaseManagerView', case_id=case_id)
+
+def CaseManagerNewComment(request, case_id, bool_param):
+    if request.method == 'POST':
+
+        newComment = request.POST['inpNewComment']
+        if not newComment:
+            messages.error(request, "Ingen kommentarer")
+        else:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    'Select * from NewComment(%s,%s,%s)',
+                    [request.user.id, case_id, newComment]
+                )
+                result = cursor.fetchone()
+                if result[1]:
+                    messages.success(request, result[2])
+                    if bool_param.lower() == 'false':
+                        cursor.execute(
+                            '''UPDATE Case_Model
+                                SET Have_Comments = true
+                                WHERE case_id = %s
+                            ''', [case_id]
+                        )
+                        conn.commit()
+                else:
+                    messages.error(request, result[2])
+
+    return redirect('scrCaseManagerView', case_id=case_id)
+
+            
