@@ -4,5 +4,6 @@ from . import views
 urlpatterns = [
     path('scrUserMain/', views.UserMain, name='scrUserMain'),
     path('scrUserTable/', views.UserTable, name='scrUserTable'),
-    path('scrUserView/', views.UserView, name='scrUserView')
+    path('scrUserView/<int:case_id>/', views.UserView, name='scrUserView'),
+    path('UserNewComment/<int:case_id>/<str:bool_param>/', views.UserNewComment, name='UserNewComment')
 ]
