@@ -1,5 +1,7 @@
 select * from public.auth_user
 
+select * from Case_Model Where Case_ID = 1
+
 create table Case_Model(
 	Case_ID Serial Primary Key,
 	CaseManager_ID Integer References public.auth_user(id),
@@ -56,44 +58,24 @@ RETURNS TABLE(caseId INTEGER, success BOOLEAN, message TEXT)
 LANGUAGE plpgsql
 AS $$
 BEGIN 
-    
-    IF inpStatus IS NOT NULL AND inpAppointment_Date IS NOT NULL THEN
-        UPDATE Case_Model 
-        SET Status = inpStatus, 
-            Appointment_date = inpAppointment_Date,
-            Changed_at = CURRENT_TIMESTAMP
-        WHERE Case_ID = inpCase_ID
-        RETURNING Case_ID INTO caseId;
-        
-    ELSIF inpStatus IS NOT NULL AND inpAppointment_Date IS NULL THEN
-        UPDATE Case_Model 
-        SET Status = inpStatus,
-            Changed_at = CURRENT_TIMESTAMP
-        WHERE Case_ID = inpCase_ID
-        RETURNING Case_ID INTO caseId;
-        
-    ELSIF inpStatus IS NULL AND inpAppointment_Date IS NOT NULL THEN
-        UPDATE Case_Model 
-        SET Appointment_date = inpAppointment_Date,
-            Changed_at = CURRENT_TIMESTAMP
-        WHERE Case_ID = inpCase_ID
-        RETURNING Case_ID INTO caseId;
-
-	ELSIF inpCaseManager_ID IS NOT NULL THEN
-		Update Case_Model
-		SET CaseManager_ID = inpCaseManager_ID,
-		Changed_at = CURRENT_TIMESTAMP
-		WHERE Case_ID = inpCase_ID
-        RETURNING Case_ID INTO caseId;
-	  
-    ELSE
-        -- No parameters provided to update
+    -- Check if at least one parameter is provided
+    IF inpStatus IS NULL AND inpAppointment_Date IS NULL AND inpCaseManager_ID IS NULL THEN
         caseId := inpCase_ID;
         success := FALSE;
         message := 'No changes specified';
         RETURN NEXT;
         RETURN;
     END IF;
+
+    -- Update all non-null fields in a single UPDATE statement
+    UPDATE Case_Model 
+    SET 
+        Status = COALESCE(inpStatus, Status),
+        Appointment_date = COALESCE(inpAppointment_Date, Appointment_date),
+        CaseManager_ID = COALESCE(inpCaseManager_ID, CaseManager_ID),
+        Changed_at = CURRENT_TIMESTAMP
+    WHERE Case_ID = inpCase_ID
+    RETURNING Case_ID INTO caseId;
 
     success := TRUE;
     message := 'Case Updated';
@@ -119,15 +101,30 @@ BEGIN
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION GetCaseComments(inpcase_id INTEGER)
-RETURNS SETOF Comments_Model
+CREATE OR REPLACE FUNCTION GetComments(inpcase_id INTEGER)
+RETURNS TABLE(
+    comments_id INTEGER,
+    case_id INTEGER,
+    author_id INTEGER,
+    author_username VARCHAR,
+    text VARCHAR,
+    created_at TIMESTAMP
+)
 LANGUAGE plpgsql
 AS $$
 BEGIN 
     RETURN QUERY
-    SELECT * 
-    FROM Comments_Model 
-    WHERE Case_ID = inpcase_id;
+    SELECT 
+        c.Comments_ID,
+        c.Case_ID,
+        c.Author_ID,
+        u.username,
+        c.Text,
+        c.Created_at
+    FROM Comments_Model c
+    JOIN public.auth_user u ON c.Author_ID = u.id
+    WHERE c.Case_ID = inpcase_id
+    ORDER BY c.Created_at ASC;
 END;
 $$;
 

@@ -4,14 +4,14 @@ from django.contrib import messages
 from django.db import connection as conn
 from django.contrib.auth.models import User
 
-def getCaseManagerName(id):
+def getName (id):
     if id:
         return User.objects.get(id=id).username
 
 def getComments(case_id):
     with conn.cursor() as cursor:
         cursor.execute(
-            'SELECT * FROM GetCaseComments(%s)',
+            'SELECT * FROM GetComments(%s)',
             [case_id]
         )
         commentsColumns = [col[0] for col in cursor.description]
@@ -27,7 +27,7 @@ def getComments(case_id):
 
 @login_required 
 def CaseManagerMain(request):
-    return render(request,'scrCaseManagerMain.html', {'Name': getCaseManagerName(request.user.id)})
+    return render(request,'scrCaseManagerMain.html', {'Name': getName (request.user.id)})
 @login_required
 def CaseManagerTable(request):
       with conn.cursor() as cursor:
@@ -69,14 +69,14 @@ def CaseManagerView(request, case_id):
             
             if case['have_comments'] == True:
                 comments = getComments(case_id)
-                print(comments)
             else: 
                 comments = None 
                 print("none")
+
             if not case['casemanager_id']:
                  assigned =  "Velg ansatt"
             else: 
-                assigned = getCaseManagerName(case['casemanager_id'])
+                assigned = getName (case['casemanager_id'])
         else:   
             case = None
             
@@ -87,14 +87,13 @@ def CaseManagerUpdateCase(request, case_id):
     if request.method == 'POST':
         newstat = request.POST['status']    
         appointment_date = request.POST['Appointment_date']
-        assigned_to = request.POST['assigned_to']
+        assigned_to = int(request.POST['assigned_to'])
         if not appointment_date :
             appointment_date = None
         if not newstat:
             newstat = None
-        if not assigned_to:
+        if not assigned_to or assigned_to == 0:
              assigned_to = None 
-
         with conn.cursor() as cursor:
             cursor.execute(
                 'Select * from UpdateCase(%s,%s,%s,%s)'
@@ -103,6 +102,7 @@ def CaseManagerUpdateCase(request, case_id):
             result = cursor.fetchone()
             if result[1]:
                     messages.success(request, result[2])
+                    print(result)
             else:
                     messages.error(request, result[2])
     

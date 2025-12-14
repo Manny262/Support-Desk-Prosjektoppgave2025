@@ -66,7 +66,7 @@
         <br />
         <label for="assigned_to">Tildel til:</label><br />
         <select id="assigned_to" name="assigned_to">
-          <option value="">{{assigned}}</option>
+          <option value="0">{{assigned}}</option>
           {% for staff_user in staffs %}
 
           <option value="{{ staff_user.id }}">{{ staff_user.username }}</option>
@@ -85,9 +85,9 @@
       <br /><br />
       <br />
 
-      <p>{{case.changed_at}}</p>
+      <p>Oppdatert: {{case.changed_at}}</p>
       <br />
-      <p>{{case.created_at}}</p>
+      <p>Opprettet: {{case.created_at}}</p>
       {% endif %}
     </div>
     </section>
@@ -97,7 +97,7 @@
       <div>
       {% if comments %} {% for comment in comments %}
       <div>
-      <p><strong>{{ comment.user }}</strong> - {{ comment.created_at }}</p>
+      <p><strong>{{ comment.author_username }}</strong> - {{ comment.created_at }}</p>
       <p>{{ comment.text }}</p>
       </div>
       {% endfor %}
