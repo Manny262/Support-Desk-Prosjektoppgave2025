@@ -1,6 +1,6 @@
 select * from public.auth_user
 
-select * from Case_Model Where Case_ID = 1
+select * from Case_Model;
 
 create table Case_Model(
 	Case_ID Serial Primary Key,
@@ -58,7 +58,6 @@ RETURNS TABLE(caseId INTEGER, success BOOLEAN, message TEXT)
 LANGUAGE plpgsql
 AS $$
 BEGIN 
-    -- Check if at least one parameter is provided
     IF inpStatus IS NULL AND inpAppointment_Date IS NULL AND inpCaseManager_ID IS NULL THEN
         caseId := inpCase_ID;
         success := FALSE;
@@ -66,8 +65,6 @@ BEGIN
         RETURN NEXT;
         RETURN;
     END IF;
-
-    -- Update all non-null fields in a single UPDATE statement
     UPDATE Case_Model 
     SET 
         Status = COALESCE(inpStatus, Status),
