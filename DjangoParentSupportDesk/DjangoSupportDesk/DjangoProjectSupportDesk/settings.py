@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "192.168.1.154"
+    "192.168.1.120"
 ]
 
 
@@ -134,10 +134,11 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'AuthApp' / 'static',
+    BASE_DIR / 'staticfiles',
 ]
 
 # For production deployment
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'staticfiles_collected'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

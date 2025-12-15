@@ -1,0 +1,346 @@
+/* =============================================================================
+   CASEMANAGER.CSS - CaseManagerApp Styles
+   Styles for case manager pages (CaseManagerMain, CaseManagerTable, CaseManagerView)
+   Requires: base.css
+   ============================================================================= */
+
+/* -------------------------
+   CASE MANAGER MAIN PAGE
+   ------------------------- */
+.case-manager-main-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: var(--space-xl);
+}
+
+.case-manager-header {
+  margin-bottom: var(--space-2xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.case-manager-welcome {
+  font-size: var(--h1-size);
+  margin-bottom: var(--space-s);
+}
+
+.case-manager-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-l);
+  margin-bottom: var(--space-2xl);
+}
+
+.stat-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--card-padding-lg);
+  border-left: 4px solid var(--primary);
+  transition: transform var(--duration-base), box-shadow var(--duration-base);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card.pending {
+  border-left-color: var(--info);
+}
+
+.stat-card.in-progress {
+  border-left-color: hsl(45, 95%, 55%);
+}
+
+.stat-card.resolved {
+  border-left-color: var(--success);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: var(--space-xs);
+}
+
+.stat-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* -------------------------
+   CASE MANAGER TABLE
+   ------------------------- */
+.case-manager-table-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: var(--space-xl);
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-l);
+}
+
+.table-filters {
+  display: flex;
+  gap: var(--space-m);
+  align-items: center;
+}
+
+.filter-select {
+  min-width: 200px;
+}
+
+.manager-cases-table {
+  width: 100%;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  border-collapse: collapse;
+}
+
+.manager-cases-table thead {
+  background: var(--primary);
+  color: white;
+}
+
+.manager-cases-table th {
+  padding: var(--space-m);
+  text-align: left;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.manager-cases-table td {
+  padding: var(--space-m);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.manager-cases-table tbody tr {
+  transition: background-color var(--duration-fast);
+}
+
+.manager-cases-table tbody tr:hover {
+  background-color: hsla(215, 90%, 55%, 0.05);
+  cursor: pointer;
+}
+
+.manager-cases-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Priority badges */
+.priority-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.priority-badge.high {
+  background-color: hsla(0, 70%, 55%, 0.15);
+  color: var(--error);
+}
+
+.priority-badge.medium {
+  background-color: hsla(45, 95%, 55%, 0.15);
+  color: hsl(45, 95%, 40%);
+}
+
+.priority-badge.low {
+  background-color: hsla(145, 60%, 45%, 0.15);
+  color: var(--success);
+}
+
+/* -------------------------
+   CASE MANAGER VIEW / DETAILS
+   ------------------------- */
+.case-manager-view-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: var(--space-xl);
+  overflow-y: auto;
+}
+.ChildCaseContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-m);
+}
+#Title,
+#description,
+#category,
+#urgency {
+  background-color: var(--surface);
+  border-radius: var(--radius-md);
+  height: var(--control-height);
+  padding: var(--space-m);
+  display: flex;
+  align-items: center;
+}
+#Title {
+  grid-column: 1 / 3;
+}
+#description {
+  grid-column: 1/3;
+  max-height: fit-content;
+  font-size: var(--base-font-size);
+}
+#category {
+  grid-column: 1;
+  grid-row: 3;
+  font-size: var(--base-font-size);
+}
+#urgency {
+  grid-column: 2;
+  grid-row: 3;
+  font-size: var(--base-font-size);
+}
+#statusForm {
+  grid-column: 1/3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-m);
+}
+select,
+option {
+  font-size: var(--base-font-size);
+}
+
+.status {
+  grid-column: 1;
+}
+.assigned_to {
+  grid-column: 2;
+  grid-row: 1;
+}
+.Appointment_date {
+  grid-column: 1;
+}
+#submitbtn {
+  grid-column: 1/3;
+}
+#updated {
+  grid-column: 1;
+  font-size: var(--label-size);
+}
+#Created {
+  grid-column: 2;
+  font-size: var(--label-size);
+}
+.ParentComment {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  gap: var(--space-s);
+  overflow-y: auto;
+}
+
+#formsNewComment {
+  display: flex;
+  gap: var(--space-s);
+}
+.comment-item {
+    height: fit-content;
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    padding: var(--space-m);
+    margin-bottom: var(--space-s);
+    border-left: 3px solid var(--primary);
+}
+
+.comment-item strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.comment-item p:first-child {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+}
+
+.comment-item p:last-child {
+    color: var(--text-primary);
+    margin: 0;
+}
+#submitComment {
+  display: inline-block;
+  padding: var(--button-padding);
+  background: var(--primary);
+  border: none;
+  border-radius: var(--radius-md);
+  color: white;
+  font-size: var(--text-sm);
+  font-weight: 300;
+  cursor: pointer;
+}
+#submitComment:hover {
+  background: var(--primary-hover);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+}
+/* -------------------------
+   RESPONSIVE DESIGN
+   ------------------------- */
+@media (max-width: 480px) {
+    .case-manager-main-container,
+    .case-manager-table-container,
+    .case-manager-view-container {
+        padding: var(--space-m);
+    }
+
+    .case-manager-welcome {
+        font-size: var(--h2-size);
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .manager-cases-table th,
+    .manager-cases-table td {
+        padding: var(--space-s);
+        font-size: var(--text-xs);
+    }
+
+    .ChildCaseContainer {
+        grid-template-columns: 1fr;
+    }
+
+    #Title,
+    #description,
+    #category,
+    #urgency {
+        grid-column: 1;
+    }
+
+    #statusForm {
+        grid-template-columns: 1fr;
+    }
+
+    .status,
+    .assigned_to,
+    .Appointment_date,
+    #submitbtn,
+    #updated,
+    #Created {
+        grid-column: 1;
+    }
+
+    #formsNewComment {
+        flex-direction: column;
+    }
+}

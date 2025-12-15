@@ -1,11 +1,31 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>scrCaseManagerMain</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/casemanager.css' %}" />
   </head>
   <body>
+    <header>
+      <nav>
+        <div class="rightNav">
+          <a href="#">Notification</a>
+        </div>
+        <div class="middleNav">
+        <a href="#">Innstillinger</a>
+        <a href="{% url 'scrNewCase' %}">Oppret sak</a>
+        <a href="{% url 'scrCaseManagerTable' %}">Mine saker</a>
+        </div>
+
+        <div class="leftNav">
+          <a href="{% url 'scrLogoutPage' %}">logg ut</a>
+        </div>
+        
+      </nav>
+    </header>
     {% if messages %}
     <div class="messages">
       {% for message in messages %}
@@ -14,8 +34,6 @@
     </div>
     {% endif %}
     <h1>Hei {{Name}}!</h1>
-    <a href="{% url 'scrNewCase' %}">Oppret sak</a>
-    <a href="{% url 'scrCaseManagerTable' %}">Mine saker</a>
-    <a href="{% url 'scrLogoutPage' %}">logg ut</a>
+
   </body>
 </html>

@@ -1,50 +1,83 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>scrNewCase</title>
-</head>
-<body>
-    <input type=button value="Gå tilbake" onClick="javascript:history.go(-1);">
-    <h1>Opprett ny sak:</h1>
-    <form method="POST" action="{% url 'CreateCase' %}">
-        {% csrf_token %}
-        <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title" maxlength="100" required><br><br>
-        
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description" maxlength="500" rows="5" cols="50" required></textarea><br><br>
-        
-        <label for="category">Category:</label><br>
-        <select id="category" name="category" required>
-            <option value="">Velg Kategori</option>
-            <option value="Pc">Pc</option>
-            <option value="Mac">Mac</option>
-            <option value="Teams">Teams</option>
-            <option value="Office365">Office365</option>
-        </select><br><br>
-        
-        <label for="urgency">Urgency:</label><br>
-        <select id="urgency" name="urgency" required>
-            <option value="">Hastighetsnivå</option>
-            <option value="low">lavt</option>
-            <option value="middel">Middels</option>
-            <option value="high">Høyt</option>
-        </select><br><br>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/shared.css' %}" />
+  </head>
+  <body>
+    <div class="new-case-container">
+      <div class="new-case-card">
+        <div class="new-case-header">
+          <h1>Opprett ny sak</h1>
+          <p class="new-case-description">Fyll ut skjemaet nedenfor for å opprette en ny sak</p>
+        </div>
 
-        
-        <button type="submit">Submit Case</button>
-    </form>
-    {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+        <form method="POST" action="{% url 'CreateCase' %}" class="new-case-form">
+          {% csrf_token %}
+          
+          <div class="form-group">
+            <label for="title">Tittel <span class="form-required"></span></label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              maxlength="100"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="description">Beskrivelse <span class="form-required"></span></label>
+            <textarea
+              id="description"
+              name="description"
+              maxlength="500"
+              rows="5"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="category">Kategori <span class="form-required"></span></label>
+              <select id="category" name="category" class="category-select" required>
+                <option value="">Velg Kategori</option>
+                <option value="Pc">Pc</option>
+                <option value="Mac">Mac</option>
+                <option value="Teams">Teams</option>
+                <option value="Office365">Office365</option>
+              </select>
             </div>
-    {% endif %}
 
-</body>
+            <div class="form-group">
+              <label for="urgency">Hastegrad <span class="form-required"></span></label>
+              <select id="urgency" name="urgency" required>
+                <option value="">Velg Hastegrad</option>
+                <option value="low">Lavt</option>
+                <option value="middel">Middels</option>
+                <option value="high">Høyt</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-cancel" onClick="javascript:history.go(-1);">Avbryt</button>
+            <button type="submit" class="btn btn-submit">Send inn sak</button>
+          </div>
+        </form>
+
+        {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </body>
 </html>

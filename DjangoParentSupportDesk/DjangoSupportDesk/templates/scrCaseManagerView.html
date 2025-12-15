@@ -1,9 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>scrCaseManagerView</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/casemanager.css' %}">
     <style>
       *{
         padding: 0;
@@ -27,8 +30,9 @@
   </head>
   <body>
     
-    <section>
-    <a href="{% url 'scrCaseManagerTable' %}">Gå tilbake</a>
+   
+    <section class="case-manager-view-container">
+     <a href="{% url 'scrCaseManagerTable' %}">Gå tilbake</a>
 
     {% if messages %}
     
@@ -38,23 +42,21 @@
       {% endfor %}
     </div>
     {% endif %}
-    <div>
+    <div class="ChildCaseContainer">
       {% if case %}
-      <h2>Sak #{{ case.case_id }}: {{ case.title }}</h2>
-      <button id="submitbtn" form="statusForm" type="submit">lagre</button>
-      <p>{{case.description}}</p>
-      <br />
-      <p>{{case.category}}</p>
-      <br />
-      <p>{{case.urgency}}</p>
-      <br />
+      <h2 id="Title">Sak #{{ case.case_id }}: {{ case.title }}</h2>
+      <p id="description">{{case.description}}</p>
+      <p id="category">{{case.category}}</p>
+      <p id="urgency">{{case.urgency}}</p>
+      
       <form
-        id="statusForm"
-        method="POST"
-        action="{% url 'CaseManagerUpdateCase' case.case_id %}"
+      id="statusForm"
+      method="POST"
+      action="{% url 'CaseManagerUpdateCase' case.case_id %}"
       >
-        {% csrf_token %}
-        <label for="status">status:</label><br />
+      {% csrf_token %}
+      <div class="status">
+        <label for="status">status:</label>
         <select id="status" name="status">
           <option value="" id="emptyCaseStat"></option>
           <option value="pending">Venter..</option>
@@ -63,52 +65,54 @@
           <option value="Assigned_date">Tilordnet dato</option>
           <option value="Completed">Fullført</option>
         </select>
-        <br />
-        <label for="assigned_to">Tildel til:</label><br />
+      </div>
+      <div class="assigned_to">
+        <label for="assigned_to" >Tildel til:</label>
         <select id="assigned_to" name="assigned_to">
           <option value="0">{{assigned}}</option>
           {% for staff_user in staffs %}
-
+          
           <option value="{{ staff_user.id }}">{{ staff_user.username }}</option>
           {% endfor %}
         </select>
-        <br />
+      </div>
+      <div class="Appointment_date">
         <label for="Appointment_date">Timeavtale:</label>
-        <br />
         <input
-          type="datetime-local"
-          id="Appointment_date"
-          name="Appointment_date"
-          value="{% if case.appointment_date %}{{ case.appointment_date|date:'Y-m-d\TH:i' }}{% endif %}"
+        type="datetime-local"
+        id="Appointment_date"
+        name="Appointment_date"
+        value="{% if case.appointment_date %}{{ case.appointment_date|date:'Y-m-d\TH:i' }}{% endif %}"
         />
-      </form>
-      <br /><br />
-      <br />
+      </div>
+      
+    </form>
+    <button id="submitbtn" form="statusForm" type="submit" class="btn" style="transform: none;">lagre</button>
+    <p id="updated">Oppdatert: {{case.changed_at}}</p>
+    <p id="Created">Opprettet: {{case.created_at}}</p>
+    {% endif %}
+</section>
 
-      <p>Oppdatert: {{case.changed_at}}</p>
-      <br />
-      <p>Opprettet: {{case.created_at}}</p>
-      {% endif %}
-    </div>
-    </section>
-    
-    
-    <section>
-      <div>
+
+<section class="ParentComment">
+  
+      
+   <div>
       {% if comments %} {% for comment in comments %}
-      <div>
+     <div class="comment-item">  
       <p><strong>{{ comment.author_username }}</strong> - {{ comment.created_at }}</p>
       <p>{{ comment.text }}</p>
-      </div>
+      </div>  
       {% endfor %}
         
       {% endif %}
+          
     </div>
-    <div>
-      <form method="POST" action="{% url 'CaseManagerNewComment' case.case_id case.have_comments %}">
+    <div class="ParentNewComment">
+      <form method="POST" action="{% url 'CaseManagerNewComment' case.case_id case.have_comments %}" id="formsNewComment">
       {% csrf_token %}
       <input type="text" name="inpNewComment" id="inpNewComment">
-      <button type="submit">Send</button>
+      <button type="submit" id="submitComment">Send</button>
       </form>
     </div>
     </section>

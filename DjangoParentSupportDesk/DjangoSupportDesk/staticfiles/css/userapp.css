@@ -1,0 +1,233 @@
+/* =============================================================================
+   USERAPP.CSS - UserApp Styles
+   Styles for user-facing pages (UserMain, UserTable, UserView)
+   Requires: base.css
+   ============================================================================= */
+
+/* -------------------------
+   USER MAIN PAGE
+   ------------------------- */
+.user-main-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: var(--space-xl);
+}
+
+.user-main-header {
+  margin-bottom: var(--space-2xl);
+}
+
+.user-welcome {
+  font-size: var(--h1-size);
+  margin-bottom: var(--space-m);
+}
+
+/* -------------------------
+   USER TABLE / CASE LIST
+   ------------------------- */
+.user-table-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: var(--space-xl);
+}
+
+.cases-table {
+  width: 100%;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  border-collapse: collapse;
+}
+
+.cases-table thead {
+  background: var(--primary);
+  color: white;
+}
+
+.cases-table th {
+  padding: var(--space-m);
+  text-align: left;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cases-table td {
+  padding: var(--space-m);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.cases-table tbody tr {
+  transition: background-color var(--duration-fast);
+}
+
+.cases-table tbody tr:hover {
+  background-color: hsla(215, 90%, 55%, 0.05);
+}
+
+.cases-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Case status badges */
+.case-status {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.case-status.open {
+  background-color: hsla(200, 80%, 60%, 0.15);
+  color: var(--info);
+}
+
+.case-status.in-progress {
+  background-color: hsla(45, 95%, 55%, 0.15);
+  color: hsl(45, 95%, 40%);
+}
+
+.case-status.closed {
+  background-color: hsla(145, 60%, 45%, 0.15);
+  color: var(--success);
+}
+
+/* -------------------------
+   USER VIEW / CASE DETAILS
+   ------------------------- */
+.user-view-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: var(--space-xl);
+}
+
+.case-detail-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--card-padding-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.case-header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--space-l);
+  margin-bottom: var(--space-l);
+}
+
+.case-title {
+  font-size: var(--h2-size);
+  margin-bottom: var(--space-s);
+}
+
+.case-meta {
+  display: flex;
+  gap: var(--space-l);
+  flex-wrap: wrap;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.case-meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.case-body {
+  margin-bottom: var(--space-xl);
+}
+
+.case-description {
+  color: var(--text-primary);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+/* -------------------------
+   COMMENTS SECTION
+   ------------------------- */
+.comments-section {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--card-padding-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.comments-header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--space-m);
+  margin-bottom: var(--space-l);
+}
+
+.comment {
+  padding: var(--space-m);
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-m);
+  border-left: 3px solid var(--primary);
+}
+
+.comment:last-child {
+  margin-bottom: 0;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-s);
+}
+
+.comment-author {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.comment-date {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.comment-body {
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* -------------------------
+   ADD COMMENT FORM
+   ------------------------- */
+.add-comment-form {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--card-padding-lg);
+}
+
+.add-comment-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* -------------------------
+   ACTION BUTTONS
+   ------------------------- */
+.action-buttons {
+  display: flex;
+  gap: var(--space-m);
+  margin-top: var(--space-l);
+}
+
+.btn-back {
+  background: var(--text-secondary);
+}
+
+.btn-back:hover {
+  background: var(--text-primary);
+}
