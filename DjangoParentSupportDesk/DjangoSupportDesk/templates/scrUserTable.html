@@ -1,53 +1,46 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>scrUserTable</title>
+    <title>Dine saker</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/userapp.css' %}">
 </head>
-<style>
-body{
-    gap: 10px;
-}
-.ParentContainer{
-    gap: 10px
-}
-.caseParent{
-    display: flex; justify-content: space-between; align-items: center;
-    max-width: 1000px;
-    border: 1px solid black;
-    border-radius: 5px;
-}
-</style>
 <body>
-    <div>
-        <a href="{% url 'scrUserMain'%}">Gå tilbake</a>
-    </div>
-     {% if messages %}
-    <div class="messages">
-      {% for message in messages %}
-      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-      {% endfor %}
-    </div>
-    {% endif %}
-    <div class="ParentContainer" >
-        <h1 class="mb-4">Dine saker:</h1>
-                {% for case in cases %}
-                <section class="caseParent">
-                <div>
-                    <ul>{{ case.case_id }}</ul>
-                    <ul>{{ case.title }}</ul>
-                    <ul>{{ case.category }}</ul>
-                    <ul>{{ case.status }}</ul>
-                    <ul>{{ case.created_at }}</ul>
-                </div>
-                <button onclick="window.location.href='{% url 'scrUserView' case.case_id %}';" style="cursor: pointer;"> Gå til sak</button>
-            </section>
-            <br>
-                {% empty %}
-                {% endfor %}
-            
-    </div>
+    <div class="ParentContainer">
+        <div class="page-header">
+            <a href="{% url 'scrUserMain'%}" class="btn btn-back">Gå tilbake</a>
+            <h1>Dine saker:</h1>
+        </div>
 
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% for case in cases %}
+        <section class="caseParent">
+            <div class="case-info">
+                <ul>
+                    <li>#{{ case.case_id }}</li>
+                    <li><strong>{{ case.title }}</strong></li>
+                    <li>{{ case.category }}</li>
+                    <li><span class="case-status {{ case.status|lower }}">{{ case.status }}</span></li>
+                    <li>{{ case.created_at|date:"d.m.Y H:i" }}</li>
+                </ul>
+            </div>
+            <button onclick="window.location.href='{% url 'scrUserView' case.case_id %}';" class="btn">Gå til sak</button>
+        </section>
+        {% empty %}
+        <div class="card">
+            <p class="text-center">Du har ingen saker ennå.</p>
+        </div>
+        {% endfor %}
+    </div>
 </body>
 </html>
