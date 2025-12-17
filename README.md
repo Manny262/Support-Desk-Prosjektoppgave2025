@@ -13,12 +13,20 @@
 
 ### 1. Clone prosjektet fra GitHub
 
+**HTTPS**
 ```bash
-git clone https://github.com/[ditt-brukernavn]/Support-Desk-Prosjektoppgave2025.git
+git clone https://github.com/Manny262/Support-Desk-Prosjektoppgave2025.git
 cd Support-Desk-Prosjektoppgave2025
 ```
 
+
 ### 2. Opprett et virtuelt miljø
+
+start med å cd inn i DjangoParentSupportDesk
+
+```bash 
+cd DjangoParentSupportDesk
+```
 
 **Windows:**
 ```bash
@@ -27,7 +35,6 @@ venv\Scripts\activate
 ```
 
 (Noen pc-er tilatter bruk av "py" istedenfor python)
-
 **Mac/Linux:**
 ```bash
 python -m venv venv
@@ -37,7 +44,6 @@ source venv\bin\activate
 ### 3. Installer nødvendige pakker
 
 ```bash
-cd DjangoParentSupportDesk
 pip install -r requirements.txt
 ```
 
