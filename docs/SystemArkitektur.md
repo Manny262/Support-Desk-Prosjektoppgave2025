@@ -40,8 +40,7 @@ SUPPORT-DESK-PROSJEKTOPPGAVE2025/
 │       │   └── static/
 │       │       └── css/
 │       │
-│       ├── templates/                                    
-│       │   ├── home.html                   
+│       ├── templates/                                                     
 │       │   ├── scrLogin.html               
 │       │   ├── scrRegister.html            
 │       │   ├── scrLogoutPage.html         
