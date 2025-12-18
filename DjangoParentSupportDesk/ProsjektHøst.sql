@@ -1,6 +1,3 @@
-select * from public.auth_user
-
-select * from Case_Model;
 
 create table Case_Model(
 	Case_ID Serial Primary Key,

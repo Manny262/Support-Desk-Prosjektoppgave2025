@@ -9,6 +9,7 @@
 ### Forutsetninger
 - Python 3.13.9 installert
 - PostgreSQL installert og kjørende
+- pgAdmin 4 installert
 - Git installert
 
 ### 1. Clone prosjektet fra GitHub
@@ -35,6 +36,7 @@ venv\Scripts\activate
 ```
 
 (Noen pc-er tilatter bruk av "py" istedenfor python)
+
 **Mac/Linux:**
 ```bash
 python -m venv venv
@@ -61,11 +63,7 @@ whitenoise==6.11.0
 
 #### 4.1 Opprett PostgreSQL database
 
-Åpne PostgreSQL (pgAdmin eller kommandolinje) og opprett en database:
-
-```sql
-CREATE DATABASE "ProsjektHøstDatabase";
-```
+Åpne PostgreSQL (pgAdmin) og opprett en database med navn  `ProsjektHøstDatabase`. 
 
 #### 4.2 Konfigurer database tilkobling
 
@@ -79,8 +77,18 @@ DB_PASSWORD=[ditt-postgres-passord]
 DB_HOST=localhost
 DB_PORT=5432
 ```
+#### 4.3 Opprett fuksjoner og tabeller
+Det finnes to måter å opprette tabeller og funksjoner fra SQL-filen:
 
-#### 4.3 Kjør database migrasjoner
+**Alternativ A: Bruk pgAdmin (GUI)**
+
+1. Åpne pgAdmin
+2. Naviger til din database `ProsjektHøstDatabase`
+3. Høyreklikk på databasen → Velg **Query Tool**
+4. Åpne SQL-filen fra prosjektet: `File` → `Open` → Naviger til `DjangoParentSupportDesk/ProsjektHøst.sql` 
+5. Trykk på **Execute/Run** (F5) for å kjøre SQL-kommandoene
+
+#### 4.4 Kjør database migrasjoner
 
 ```bash
 cd DjangoSupportDesk
@@ -147,10 +155,10 @@ Eller gå til System Preferences → Network og se IP-adressen til din aktive ti
 ip a
 ```
 
-#### docs:
+### docs:
 - Jeg brukte github projects (kanban) for oversikt over todo, og completed (pluss backlog)
 
-##### Planleggingsfasen:
+#### Planleggingsfasen:
 
 Dette er det jeg gjorde i planleggingsfasen:
 
@@ -164,7 +172,7 @@ Saksbehandlere kan istedenfor bli merket som Staff i admin-panelet, for å få t
 
 - [stack.md] viser hvilke stack jeg tenkte å bruke.
 
-##### Under programmeringen og på avslutten:
+#### Under programmeringen og på avslutten:
 
 - [currentStack.md] for hvilke stack jeg endte opp med.
 
